@@ -44,17 +44,23 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
  **Rubric**: 2pt for loading the data (autograder); 1pt for describing the number of candidates (PDF); 3pts for creating the table (autograder); 2pt for using `kable()` to nicely format the output (PDF)
 
 ## Answer 1
-
-```{r}
+```{r Answer_1A}
 library(dplyr)
 library(ps270data)
 library(readr)
+library(ggplot2)
+library(forcats)
 fb_ads <- read_csv("data/fb_ads.csv")
 fb_ads
-
 ## There are 7014 candidates in the dataset
 ```
 
+```{r Answer_1B}
+incumbency_table <- fb_ads |>
+    count(incumbency)
+
+knitr::kable(incumbency_table)
+```
 
 \newpage
 
@@ -73,7 +79,14 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
  **Rubric**: 3pts for creating `party_incumbent_promote` correctly (autograder); 2pt for a nicely formatted table (PDF); 1pt for changing the column names of the output table (PDF); 1pt for correctly identifying the type of candidate with highest average (PDF)
 
 ## Answer 2
+```{r}
+party_incumbent_promote <- fb_ads |> 
+  filter(office == "US House" | office == "US Senate") |>
+  group_by(party, incumbency) |>
+  summarize(promote_prop = mean(ad_tone_promote))
 
+knitr::kable(party_incumbent_promote, col.names = c("party", "incumbency", "promote_prop"))
+```
 
 
 \newpage
@@ -88,6 +101,13 @@ Create a histogram of this variable for just the US House races. Save the ggplot
  **Rubric:** 2pt for creating the new variable (autograder); 3pts for creating the histogram object (autograder); 2pts for answering the question about the histogram (PDF)
 
 ## Answer 3
+```{r Answer_3A}
+fb_ads <- fb_ads |>
+   mutate(impressions_millions = (impressions)/1000000)
+ 
+  plot_q3 <- ggplot(data = fb_ads |> filter(office == "US House"), mapping = aes(impressions_millions)) + geom_histogram(na.rm = TRUE)
+plot_q3
+```
 
 
 
@@ -112,6 +132,22 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ## Answer 4
 
+```{r}
+top_15_candidates <- fb_ads |>
+  filter(office == "US House") |>
+  arrange(desc(impressions_millions)) |>
+  head(15)
+
+fb_top_plot <- ggplot(data = top_15_candidates,
+  mapping = aes(x = impressions_millions,
+                y = fct_reorder(cand_name_last, 
+                                impressions_millions))) +
+  geom_col(aes(fill = party)) + labs(x = "Facebook Ad Impressions (in millions)",
+                                     y = "Candidate Last Names (ascending from least to most impressions)",
+                                     title = "Top 15 House Candidate Facebook Ad Impressions 2017-2018")
+fb_top_plot
+  
+```
 
 
 \newpage
