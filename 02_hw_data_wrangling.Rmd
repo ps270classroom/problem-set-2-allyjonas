@@ -44,7 +44,7 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
  **Rubric**: 2pt for loading the data (autograder); 1pt for describing the number of candidates (PDF); 3pts for creating the table (autograder); 2pt for using `kable()` to nicely format the output (PDF)
 
 ## Answer 1
-```{r Answer_1A}
+```{r}
 library(dplyr)
 library(ps270data)
 library(readr)
@@ -52,15 +52,14 @@ library(ggplot2)
 library(forcats)
 fb_ads <- read_csv("data/fb_ads.csv")
 fb_ads
-## There are 7014 candidates in the dataset
-```
 
-```{r Answer_1B}
+## There are 7014 candidates in the dataset
+
 incumbency_table <- fb_ads |>
     count(incumbency)
-
 knitr::kable(incumbency_table)
 ```
+
 
 \newpage
 
