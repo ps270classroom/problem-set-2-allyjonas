@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 2: Data Wrangling"
-author: Your Name Here
+author: Ally Jonas
 output: pdf_document
 ---
 
@@ -45,6 +45,15 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 
 ## Answer 1
 
+```{r}
+library(dplyr)
+library(ps270data)
+library(readr)
+fb_ads <- read_csv("data/fb_ads.csv")
+fb_ads
+
+## There are 7014 candidates in the dataset
+```
 
 
 \newpage
