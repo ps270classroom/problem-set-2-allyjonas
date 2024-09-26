@@ -51,7 +51,6 @@ library(readr)
 library(ggplot2)
 library(forcats)
 fb_ads <- read_csv("data/fb_ads.csv")
-fb_ads
 
 ## There are 7014 candidates in the dataset
 
