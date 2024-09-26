@@ -46,7 +46,7 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
 ## Answer 1
 ```{r}
 library(dplyr)
-library(ps270data)
+library(tidyverse)
 library(readr)
 library(ggplot2)
 library(forcats)
